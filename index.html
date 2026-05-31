@@ -110,6 +110,18 @@
       font-size: 14px;
     }
 
+    nav a {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      transition: color 180ms ease, transform 180ms ease;
+    }
+
+    nav a:hover {
+      color: var(--text);
+      transform: translateY(-1px);
+    }
+
     .btn {
       display: inline-flex;
       align-items: center;
@@ -507,8 +519,22 @@
     <nav aria-label="Primary navigation">
       <a href="#narrative">Narrative</a>
       <a href="#token">Token</a>
-      <a href="#dex">DEX</a>
-      <a href="https://x.com/CastMeshAI" target="_blank" rel="noopener">X</a>
+      <a href="https://dexscreener.com/base/0x6e7441f58fef85c87855b43820869eba6333c30c571bd8a186e64b63756b776e" target="_blank" rel="noopener">
+        <svg class="dex-mark" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4 15.5 9.2 10l3.7 3.7L20 6.6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M4 19h16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+          <circle cx="9.2" cy="10" r="2" fill="currentColor"/>
+          <circle cx="12.9" cy="13.7" r="2" fill="currentColor"/>
+          <circle cx="20" cy="6.6" r="2" fill="currentColor"/>
+        </svg>
+        DEX
+      </a>
+      <a href="https://x.com/CastMeshAI" target="_blank" rel="noopener">
+        <svg class="x-mark" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M17.9 3h3.1l-6.8 7.8L22 21h-6.3l-4.9-6.4L5.2 21H2l7.3-8.4L2 3h6.4l4.4 5.9L17.9 3Zm-1.1 16.2h1.7L7.5 4.7H5.6l11.2 14.5Z" fill="currentColor"/>
+        </svg>
+        X
+      </a>
     </nav>
     <a class="btn" href="https://dexscreener.com/base/0x6e7441f58fef85c87855b43820869eba6333c30c571bd8a186e64b63756b776e" target="_blank" rel="noopener">
       <svg class="dex-mark" viewBox="0 0 24 24" aria-hidden="true">
