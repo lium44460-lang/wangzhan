@@ -78,6 +78,7 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      gap: 9px;
       min-height: 44px;
       padding: 0 18px;
       border: 1px solid rgba(255, 255, 255, 0.18);
@@ -140,6 +141,58 @@
       background: rgba(255, 255, 255, 0.06);
       color: var(--text);
       box-shadow: none;
+    }
+
+    .btn svg, nav svg {
+      flex: 0 0 auto;
+      width: 18px;
+      height: 18px;
+    }
+
+    .dex-mark {
+      color: #7cff9d;
+      filter: drop-shadow(0 0 10px rgba(124, 255, 157, 0.42));
+    }
+
+    .x-mark {
+      color: currentColor;
+    }
+
+    .ca-strip {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      max-width: 760px;
+      margin: 0 0 20px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.045);
+    }
+
+    .ca-strip span {
+      color: var(--cyan);
+      font-size: 18px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .ca-strip code {
+      overflow-wrap: anywhere;
+      color: #dff8ff;
+      font: 700 14px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    }
+
+    .mini-btn {
+      min-height: 34px;
+      padding: 0 12px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      background: rgba(65, 242, 255, 0.12);
+      color: var(--text);
+      font-weight: 800;
+      cursor: pointer;
     }
 
     .metrics {
@@ -303,8 +356,18 @@
       <a href="#narrative">Narrative</a>
       <a href="#token">Token</a>
       <a href="#dex">DEX</a>
+      <a href="https://x.com/CastMeshAI" target="_blank" rel="noopener">X</a>
     </nav>
-    <a class="btn" href="#dex">Join the Echo</a>
+    <a class="btn" href="https://dexscreener.com/base/0x6e7441f58fef85c87855b43820869eba6333c30c571bd8a186e64b63756b776e" target="_blank" rel="noopener">
+      <svg class="dex-mark" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M4 15.5 9.2 10l3.7 3.7L20 6.6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M4 19h16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+        <circle cx="9.2" cy="10" r="2" fill="currentColor"/>
+        <circle cx="12.9" cy="13.7" r="2" fill="currentColor"/>
+        <circle cx="20" cy="6.6" r="2" fill="currentColor"/>
+      </svg>
+      Join the Echo
+    </a>
   </header>
 
   <main class="shell">
@@ -314,8 +377,28 @@
         <h1>Make the feed talk back.</h1>
         <p class="lead">ECHOBASE turns attention into an onchain echo loop: every post, raid, reply, and agent signal becomes fuel for a community built to travel fast across Base.</p>
         <div class="actions">
-          <a class="btn" href="#dex">Launch on DEX</a>
+          <a class="btn" href="https://dexscreener.com/base/0x6e7441f58fef85c87855b43820869eba6333c30c571bd8a186e64b63756b776e" target="_blank" rel="noopener">
+            <svg class="dex-mark" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 15.5 9.2 10l3.7 3.7L20 6.6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M4 19h16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+              <circle cx="9.2" cy="10" r="2" fill="currentColor"/>
+              <circle cx="12.9" cy="13.7" r="2" fill="currentColor"/>
+              <circle cx="20" cy="6.6" r="2" fill="currentColor"/>
+            </svg>
+            View Chart
+          </a>
+          <a class="btn ghost" href="https://x.com/CastMeshAI" target="_blank" rel="noopener">
+            <svg class="x-mark" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M17.9 3h3.1l-6.8 7.8L22 21h-6.3l-4.9-6.4L5.2 21H2l7.3-8.4L2 3h6.4l4.4 5.9L17.9 3Zm-1.1 16.2h1.7L7.5 4.7H5.6l11.2 14.5Z" fill="currentColor"/>
+            </svg>
+            Follow X
+          </a>
           <a class="btn ghost" href="#narrative">Read Narrative</a>
+        </div>
+        <div class="ca-strip">
+          <span>CA:</span>
+          <code id="contract-address">0xF5f2358dA20daF3a4494adAA499b57123A96d494</code>
+          <button class="mini-btn" type="button" data-copy-ca>Copy CA</button>
         </div>
         <div class="metrics">
           <div class="metric"><strong>AI</strong><span>agent-friendly meme layer</span></div>
@@ -360,7 +443,7 @@
         <div><span>Name</span><strong>ECHOBASE</strong></div>
         <div><span>Symbol</span><strong>ECHO</strong></div>
         <div><span>Chain</span><strong>Base</strong></div>
-        <div><span>Category</span><strong>AI Meme SocialFi</strong></div>
+        <div><span>Contract</span><strong>0xF5...d494</strong></div>
       </div>
     </section>
 
@@ -369,11 +452,51 @@
         <h2>DEX Description</h2>
         <p>ECHOBASE is a Base-native AI meme token for traders who believe the loudest communities win attention. Built for raids, replies, agent lore, and fast onchain social loops, ECHO gives the timeline a ticker it can repeat.</p>
       </div>
+      <div class="actions">
+        <a class="btn" href="https://dexscreener.com/base/0x6e7441f58fef85c87855b43820869eba6333c30c571bd8a186e64b63756b776e" target="_blank" rel="noopener">
+          <svg class="dex-mark" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 15.5 9.2 10l3.7 3.7L20 6.6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M4 19h16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+            <circle cx="9.2" cy="10" r="2" fill="currentColor"/>
+            <circle cx="12.9" cy="13.7" r="2" fill="currentColor"/>
+            <circle cx="20" cy="6.6" r="2" fill="currentColor"/>
+          </svg>
+          Trade on DEX
+        </a>
+        <a class="btn ghost" href="https://dexscreener.com/base/0x6e7441f58fef85c87855b43820869eba6333c30c571bd8a186e64b63756b776e" target="_blank" rel="noopener">
+          <svg class="dex-mark" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 15.5 9.2 10l3.7 3.7L20 6.6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M4 19h16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+            <circle cx="9.2" cy="10" r="2" fill="currentColor"/>
+            <circle cx="12.9" cy="13.7" r="2" fill="currentColor"/>
+            <circle cx="20" cy="6.6" r="2" fill="currentColor"/>
+          </svg>
+          Open Chart
+        </a>
+        <a class="btn ghost" href="https://x.com/CastMeshAI" target="_blank" rel="noopener">
+          <svg class="x-mark" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M17.9 3h3.1l-6.8 7.8L22 21h-6.3l-4.9-6.4L5.2 21H2l7.3-8.4L2 3h6.4l4.4 5.9L17.9 3Zm-1.1 16.2h1.7L7.5 4.7H5.6l11.2 14.5Z" fill="currentColor"/>
+          </svg>
+          Follow on X
+        </a>
+      </div>
     </section>
   </main>
 
   <footer class="shell">
     Fictional concept asset. No financial advice. Cryptocurrency is risky.
   </footer>
+  <script>
+    const copyButton = document.querySelector("[data-copy-ca]");
+    const contractAddress = document.querySelector("#contract-address");
+
+    copyButton?.addEventListener("click", async () => {
+      await navigator.clipboard.writeText(contractAddress.textContent.trim());
+      copyButton.textContent = "Copied";
+      window.setTimeout(() => {
+        copyButton.textContent = "Copy CA";
+      }, 1400);
+    });
+  </script>
 </body>
 </html>
