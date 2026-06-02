@@ -104,7 +104,7 @@
     }
 
     .hero {
-      min-height: calc(100vh - 78px);
+      min-height: clamp(720px, calc(100vh - 78px), 920px);
       display: grid;
       grid-template-columns: minmax(0, 1.04fr) minmax(340px, .96fr);
       gap: 42px;
@@ -354,6 +354,199 @@
       font-size: 14px;
     }
 
+    .section {
+      padding: 18px 0 58px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 24px;
+      border-top: 1px solid var(--line);
+      padding-top: 28px;
+      margin-bottom: 20px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: clamp(28px, 4vw, 50px);
+      line-height: 1;
+      text-transform: uppercase;
+    }
+
+    .section-head p {
+      margin: 0;
+      max-width: 520px;
+      color: #aeb8b4;
+      line-height: 1.5;
+      font-size: 14px;
+    }
+
+    .web3-grid {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 14px;
+    }
+
+    .stack, .ledger, .roadmap {
+      border: 1px solid var(--line);
+      background: rgba(6, 7, 8, .76);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .stack-row {
+      display: grid;
+      grid-template-columns: 112px minmax(0, 1fr) 92px;
+      align-items: center;
+      gap: 14px;
+      min-height: 72px;
+      padding: 0 18px;
+      border-bottom: 1px solid rgba(244, 247, 245, .1);
+    }
+
+    .stack-row:last-child { border-bottom: 0; }
+
+    .stack-row strong {
+      display: block;
+      font-size: 15px;
+      text-transform: uppercase;
+    }
+
+    .stack-row p {
+      margin: 0;
+      color: #aeb8b4;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .tag {
+      justify-self: end;
+      min-width: 72px;
+      min-height: 30px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--green);
+      border: 1px solid rgba(184, 255, 55, .32);
+      background: rgba(184, 255, 55, .07);
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 860;
+      text-transform: uppercase;
+    }
+
+    .ledger {
+      display: grid;
+      gap: 12px;
+      padding: 18px;
+    }
+
+    .ledger h3, .roadmap h3 {
+      margin: 0 0 6px;
+      font-size: 15px;
+      text-transform: uppercase;
+    }
+
+    .token-card {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 12px;
+      border: 1px solid rgba(244, 247, 245, .1);
+      background: rgba(244, 247, 245, .04);
+      border-radius: 8px;
+      padding: 14px;
+    }
+
+    .token-card span {
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      font-weight: 760;
+    }
+
+    .token-card strong {
+      font-size: 18px;
+      text-align: right;
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .flow-step {
+      position: relative;
+      min-height: 150px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      background: rgba(6, 7, 8, .78);
+      border-radius: 8px;
+    }
+
+    .flow-step::after {
+      content: "";
+      position: absolute;
+      top: 28px;
+      right: -11px;
+      width: 20px;
+      height: 1px;
+      background: linear-gradient(90deg, var(--cyan), var(--green));
+    }
+
+    .flow-step:last-child::after { display: none; }
+
+    .flow-step span {
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 880;
+    }
+
+    .flow-step h3 {
+      margin: 20px 0 10px;
+      text-transform: uppercase;
+      font-size: 16px;
+    }
+
+    .flow-step p {
+      margin: 0;
+      color: #aeb8b4;
+      font-size: 13px;
+      line-height: 1.48;
+    }
+
+    .roadmap {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0;
+      margin-bottom: 56px;
+    }
+
+    .phase {
+      min-height: 178px;
+      padding: 20px;
+      border-right: 1px solid rgba(244, 247, 245, .1);
+    }
+
+    .phase:last-child { border-right: 0; }
+
+    .phase span {
+      color: var(--cyan);
+      font-size: 12px;
+      font-weight: 850;
+      text-transform: uppercase;
+    }
+
+    .phase p {
+      margin: 12px 0 0;
+      color: #aeb8b4;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
     footer {
       display: flex;
       justify-content: space-between;
@@ -395,7 +588,28 @@
         padding-top: 40px;
       }
 
-      .metrics, .bands { grid-template-columns: 1fr; }
+      .metrics, .bands, .web3-grid, .flow, .roadmap { grid-template-columns: 1fr; }
+
+      .section-head {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .stack-row {
+        grid-template-columns: 1fr;
+        padding: 18px;
+      }
+
+      .tag { justify-self: start; }
+
+      .flow-step::after { display: none; }
+
+      .phase {
+        border-right: 0;
+        border-bottom: 1px solid rgba(244, 247, 245, .1);
+      }
+
+      .phase:last-child { border-bottom: 0; }
 
       .route-row { grid-template-columns: 72px minmax(0, 1fr) 58px; }
 
@@ -414,6 +628,7 @@
       <nav aria-label="Primary">
         <a class="pill" href="https://x.com/PASTE_X_LINK" target="_blank" rel="noreferrer">X</a>
         <a class="pill" href="https://dexscreener.com/search?q=APX" target="_blank" rel="noreferrer">DEX</a>
+        <a class="pill" href="#token">Token</a>
         <a class="pill primary" href="#contract">CA</a>
       </nav>
     </header>
@@ -480,6 +695,104 @@
           <h3>X-powered</h3>
           <p>Short-name branding, direct social routing, and campaign-ready copy for fast community distribution.</p>
         </article>
+      </section>
+
+      <section class="section" id="token" aria-label="Web3 protocol structure">
+        <div class="section-head">
+          <h2>Protocol Stack</h2>
+          <p>AxionPay frames $APX as a market-facing payment layer with clear token identity, DEX routing, and launch-ready contract placement.</p>
+        </div>
+        <div class="web3-grid">
+          <div class="stack">
+            <div class="stack-row">
+              <strong>Token</strong>
+              <p>$APX acts as the protocol unit for payment narratives, settlement routing, and campaign distribution.</p>
+              <span class="tag">Core</span>
+            </div>
+            <div class="stack-row">
+              <strong>DEX</strong>
+              <p>Market access is structured around pair visibility, chart discovery, and liquidity-screen recognition.</p>
+              <span class="tag">Route</span>
+            </div>
+            <div class="stack-row">
+              <strong>Wallet</strong>
+              <p>Copy-ready CA placement keeps verification close to the trade action and reduces launch friction.</p>
+              <span class="tag">Verify</span>
+            </div>
+            <div class="stack-row">
+              <strong>X Signal</strong>
+              <p>Social distribution is kept link-ready without exposing a visible username in the site interface.</p>
+              <span class="tag">Share</span>
+            </div>
+          </div>
+
+          <aside class="ledger" aria-label="Token ledger">
+            <h3>Token Ledger</h3>
+            <div class="token-card"><span>Ticker</span><strong>$APX</strong></div>
+            <div class="token-card"><span>Network</span><strong>TBD</strong></div>
+            <div class="token-card"><span>Supply</span><strong>TBD</strong></div>
+            <div class="token-card"><span>Liquidity</span><strong>DEX</strong></div>
+            <div class="token-card"><span>Contract</span><strong>Pending</strong></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section" aria-label="On-chain flow">
+        <div class="section-head">
+          <h2>On-chain Flow</h2>
+          <p>The experience is organized around the path a user naturally follows: discover, verify, route, and settle.</p>
+        </div>
+        <div class="flow">
+          <article class="flow-step">
+            <span>01</span>
+            <h3>Discover</h3>
+            <p>Users arrive through X, DEX screens, or market mentions and land on a single protocol identity.</p>
+          </article>
+          <article class="flow-step">
+            <span>02</span>
+            <h3>Verify</h3>
+            <p>The CA block keeps the contract address visible before any wallet or market action.</p>
+          </article>
+          <article class="flow-step">
+            <span>03</span>
+            <h3>Route</h3>
+            <p>DEX links point users toward pair discovery while the page keeps the ticker and narrative aligned.</p>
+          </article>
+          <article class="flow-step">
+            <span>04</span>
+            <h3>Settle</h3>
+            <p>$APX is positioned as the settlement layer for payment-first community movement.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" aria-label="Launch phases">
+        <div class="section-head">
+          <h2>Launch Phases</h2>
+          <p>A clean roadmap structure gives the site more protocol depth without making unsupported promises.</p>
+        </div>
+        <div class="roadmap">
+          <article class="phase">
+            <span>Phase 01</span>
+            <h3>Identity</h3>
+            <p>Finalize logo, ticker, CA placement, and exchange-facing language for market recognition.</p>
+          </article>
+          <article class="phase">
+            <span>Phase 02</span>
+            <h3>Market</h3>
+            <p>Open DEX discovery, publish contract verification, and align social launch content.</p>
+          </article>
+          <article class="phase">
+            <span>Phase 03</span>
+            <h3>Payments</h3>
+            <p>Expand protocol messaging around settlement, community payment flow, and wallet utility.</p>
+          </article>
+          <article class="phase">
+            <span>Phase 04</span>
+            <h3>Network</h3>
+            <p>Build partner routes, campaign drops, and repeatable liquidity-screen visibility.</p>
+          </article>
+        </div>
       </section>
     </main>
 
