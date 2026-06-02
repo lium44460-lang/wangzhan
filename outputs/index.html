@@ -1,0 +1,559 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AxionPay Protocol</title>
+  <style>
+    :root {
+      --bg: #060708;
+      --ink: #f4f7f5;
+      --muted: #8e9895;
+      --line: rgba(244, 247, 245, .14);
+      --green: #b8ff37;
+      --cyan: #23d7ff;
+      --red: #ff4d5f;
+      --panel: rgba(14, 17, 18, .72);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      overflow-x: hidden;
+      background:
+        radial-gradient(circle at 18% 12%, rgba(35, 215, 255, .16), transparent 34%),
+        radial-gradient(circle at 82% 8%, rgba(184, 255, 55, .13), transparent 28%),
+        linear-gradient(135deg, #060708 0%, #0d1111 45%, #050607 100%);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      letter-spacing: 0;
+    }
+
+    canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      opacity: .68;
+      pointer-events: none;
+    }
+
+    .shell {
+      position: relative;
+      z-index: 1;
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 78px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--ink);
+      text-decoration: none;
+      font-weight: 780;
+      font-size: 15px;
+      text-transform: uppercase;
+    }
+
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      filter: drop-shadow(0 0 16px rgba(184, 255, 55, .32));
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    a.pill, button.pill {
+      appearance: none;
+      border: 1px solid var(--line);
+      background: rgba(244, 247, 245, .045);
+      color: var(--ink);
+      min-height: 38px;
+      padding: 0 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+      font: inherit;
+      font-size: 13px;
+      font-weight: 720;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: border-color .2s ease, transform .2s ease, background .2s ease;
+    }
+
+    a.pill:hover, button.pill:hover {
+      border-color: rgba(184, 255, 55, .62);
+      background: rgba(184, 255, 55, .08);
+      transform: translateY(-1px);
+    }
+
+    .hero {
+      min-height: calc(100vh - 78px);
+      display: grid;
+      grid-template-columns: minmax(0, 1.04fr) minmax(340px, .96fr);
+      gap: 42px;
+      align-items: center;
+      padding: 58px 0 92px;
+    }
+
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      color: var(--green);
+      font-size: 12px;
+      text-transform: uppercase;
+      font-weight: 800;
+      margin-bottom: 22px;
+    }
+
+    .pulse {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 0 0 rgba(184, 255, 55, .5);
+      animation: pulse 1.8s infinite;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 780px;
+      font-size: clamp(52px, 8vw, 104px);
+      line-height: .9;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .x {
+      display: inline-block;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(244, 247, 245, .78);
+      text-shadow: 0 0 42px rgba(35, 215, 255, .22);
+    }
+
+    .lead {
+      max-width: 650px;
+      margin: 24px 0 0;
+      color: #c9d0ce;
+      font-size: clamp(17px, 2vw, 21px);
+      line-height: 1.56;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 34px;
+    }
+
+    .primary {
+      background: linear-gradient(135deg, var(--green), #ffffff);
+      color: #050607;
+      border-color: transparent;
+      box-shadow: 0 14px 36px rgba(184, 255, 55, .22);
+    }
+
+    .primary:hover {
+      background: linear-gradient(135deg, #ffffff, var(--green));
+      color: #050607;
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 44px;
+      max-width: 690px;
+    }
+
+    .metric {
+      border-top: 1px solid var(--line);
+      padding-top: 16px;
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 21px;
+      line-height: 1.1;
+    }
+
+    .metric span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      margin-top: 8px;
+    }
+
+    .terminal {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      backdrop-filter: blur(22px);
+      border-radius: 8px;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, .46);
+    }
+
+    .terminal::before {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      background: linear-gradient(130deg, transparent, rgba(35, 215, 255, .18), rgba(184, 255, 55, .18), transparent);
+      opacity: .8;
+      pointer-events: none;
+      animation: sweep 5s linear infinite;
+    }
+
+    .terminal-inner {
+      position: relative;
+      padding: 22px;
+    }
+
+    .ticker {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 18px;
+      gap: 18px;
+    }
+
+    .ticker h2 {
+      margin: 0;
+      font-size: 18px;
+      text-transform: uppercase;
+    }
+
+    .status {
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 820;
+      text-transform: uppercase;
+    }
+
+    .route {
+      margin: 22px 0;
+      display: grid;
+      gap: 10px;
+    }
+
+    .route-row {
+      display: grid;
+      grid-template-columns: 86px minmax(0, 1fr) 76px;
+      align-items: center;
+      gap: 12px;
+      min-height: 48px;
+      border: 1px solid rgba(244, 247, 245, .1);
+      background: rgba(244, 247, 245, .04);
+      border-radius: 8px;
+      padding: 0 12px;
+    }
+
+    .label {
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      font-weight: 760;
+    }
+
+    .bar {
+      position: relative;
+      height: 10px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: rgba(244, 247, 245, .08);
+    }
+
+    .bar i {
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: var(--w);
+      background: linear-gradient(90deg, var(--cyan), var(--green));
+      animation: load 2.8s ease-in-out infinite alternate;
+    }
+
+    .value {
+      text-align: right;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .ca-box {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: 1px dashed rgba(184, 255, 55, .45);
+      background: rgba(184, 255, 55, .055);
+      border-radius: 8px;
+      padding: 14px;
+      margin-top: 18px;
+    }
+
+    code {
+      color: #e9ffcf;
+      overflow-wrap: anywhere;
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-size: 12px;
+    }
+
+    .copy {
+      min-width: 42px;
+      min-height: 34px;
+      border-radius: 8px;
+      border: 1px solid rgba(184, 255, 55, .42);
+      background: rgba(184, 255, 55, .11);
+      color: var(--green);
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .bands {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1px;
+      border: 1px solid var(--line);
+      margin-bottom: 56px;
+      background: var(--line);
+    }
+
+    .band {
+      min-height: 168px;
+      padding: 22px;
+      background: rgba(6, 7, 8, .86);
+    }
+
+    .band h3 {
+      margin: 0 0 12px;
+      font-size: 16px;
+      text-transform: uppercase;
+    }
+
+    .band p {
+      margin: 0;
+      color: #aeb8b4;
+      line-height: 1.5;
+      font-size: 14px;
+    }
+
+    footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 24px 0 36px;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      font-size: 13px;
+    }
+
+    @keyframes pulse {
+      to { box-shadow: 0 0 0 14px rgba(184, 255, 55, 0); }
+    }
+
+    @keyframes sweep {
+      0% { transform: translateX(-30%); }
+      100% { transform: translateX(30%); }
+    }
+
+    @keyframes load {
+      from { transform: translateX(-8%); filter: brightness(.86); }
+      to { transform: translateX(6%); filter: brightness(1.2); }
+    }
+
+    @media (max-width: 860px) {
+      header {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 14px;
+        padding: 18px 0;
+      }
+
+      nav { width: 100%; flex-wrap: wrap; }
+      nav .pill { flex: 1; min-width: 92px; }
+
+      .hero {
+        grid-template-columns: 1fr;
+        gap: 28px;
+        padding-top: 40px;
+      }
+
+      .metrics, .bands { grid-template-columns: 1fr; }
+
+      .route-row { grid-template-columns: 72px minmax(0, 1fr) 58px; }
+
+      footer { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="mesh" aria-hidden="true"></canvas>
+  <div class="shell">
+    <header>
+      <a class="brand" href="#" aria-label="AxionPay Protocol home">
+        <img class="brand-mark" src="axionpay-logo-400.svg" alt="AxionPay mark">
+        AxionPay Protocol
+      </a>
+      <nav aria-label="Primary">
+        <a class="pill" href="https://x.com/PASTE_X_LINK" target="_blank" rel="noreferrer">X</a>
+        <a class="pill" href="https://dexscreener.com/search?q=APX" target="_blank" rel="noreferrer">DEX</a>
+        <a class="pill primary" href="#contract">CA</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div>
+          <div class="kicker"><span class="pulse"></span> payment rails for the on-chain trader</div>
+          <h1>Axion<span class="x">Pay</span></h1>
+          <p class="lead">A protocol-branded payment token built for fast settlement, DEX-native visibility, and a cleaner way for communities to move value without leaving the market flow.</p>
+          <div class="actions">
+            <a class="pill primary" href="https://dexscreener.com/search?q=APX" target="_blank" rel="noreferrer">Open DEX</a>
+            <a class="pill" href="https://x.com/PASTE_X_LINK" target="_blank" rel="noreferrer">Follow X</a>
+            <a class="pill" href="#contract">View CA</a>
+          </div>
+          <div class="metrics" aria-label="Protocol highlights">
+            <div class="metric"><strong>$APX</strong><span>Token symbol</span></div>
+            <div class="metric"><strong>AxionPay</strong><span>Protocol name</span></div>
+            <div class="metric"><strong>DEX</strong><span>Market route</span></div>
+          </div>
+        </div>
+
+        <aside class="terminal" aria-label="Protocol terminal">
+          <div class="terminal-inner">
+            <div class="ticker">
+              <h2>Axion route engine</h2>
+              <span class="status">Live-ready</span>
+            </div>
+            <div class="route">
+              <div class="route-row">
+                <span class="label">Pay</span>
+                <span class="bar"><i style="--w:82%"></i></span>
+                <span class="value">0.82s</span>
+              </div>
+              <div class="route-row">
+                <span class="label">Route</span>
+                <span class="bar"><i style="--w:68%"></i></span>
+                <span class="value">DEX</span>
+              </div>
+              <div class="route-row">
+                <span class="label">Settle</span>
+                <span class="bar"><i style="--w:91%"></i></span>
+                <span class="value">APX</span>
+              </div>
+            </div>
+            <div class="ca-box" id="contract">
+              <code>CA: PASTE_CONTRACT_ADDRESS_HERE</code>
+              <button class="copy" type="button" aria-label="Copy contract address" data-ca="PASTE_CONTRACT_ADDRESS_HERE">CA</button>
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <section class="bands" aria-label="Protocol positioning">
+        <article class="band">
+          <h3>DEX-native</h3>
+          <p>Designed to feel visible where traders already watch liquidity, charts, pairs, and momentum.</p>
+        </article>
+        <article class="band">
+          <h3>Payment-first</h3>
+          <p>A clear settlement identity for communities that want a token with utility-facing language from day one.</p>
+        </article>
+        <article class="band">
+          <h3>X-powered</h3>
+          <p>Short-name branding, direct social routing, and campaign-ready copy for fast community distribution.</p>
+        </article>
+      </section>
+    </main>
+
+    <footer>
+      <span>AxionPay Protocol / $APX</span>
+      <span>Links and contract address are placeholders until launch.</span>
+    </footer>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('mesh');
+    const ctx = canvas.getContext('2d');
+    let w = 0;
+    let h = 0;
+    let points = [];
+
+    function resize() {
+      w = canvas.width = window.innerWidth * devicePixelRatio;
+      h = canvas.height = window.innerHeight * devicePixelRatio;
+      points = Array.from({ length: Math.min(78, Math.floor(window.innerWidth / 16)) }, () => ({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        vx: (Math.random() - .5) * .55 * devicePixelRatio,
+        vy: (Math.random() - .5) * .55 * devicePixelRatio
+      }));
+    }
+
+    function tick() {
+      ctx.clearRect(0, 0, w, h);
+      for (const p of points) {
+        p.x += p.vx;
+        p.y += p.vy;
+        if (p.x < 0 || p.x > w) p.vx *= -1;
+        if (p.y < 0 || p.y > h) p.vy *= -1;
+      }
+      for (let i = 0; i < points.length; i++) {
+        for (let j = i + 1; j < points.length; j++) {
+          const a = points[i];
+          const b = points[j];
+          const dx = a.x - b.x;
+          const dy = a.y - b.y;
+          const d = Math.hypot(dx, dy);
+          if (d < 180 * devicePixelRatio) {
+            ctx.globalAlpha = (1 - d / (180 * devicePixelRatio)) * .36;
+            ctx.strokeStyle = i % 3 === 0 ? '#b8ff37' : '#23d7ff';
+            ctx.beginPath();
+            ctx.moveTo(a.x, a.y);
+            ctx.lineTo(b.x, b.y);
+            ctx.stroke();
+          }
+        }
+      }
+      ctx.globalAlpha = .85;
+      for (const p of points) {
+        ctx.fillStyle = '#f4f7f5';
+        ctx.fillRect(p.x - 1.5, p.y - 1.5, 3, 3);
+      }
+      requestAnimationFrame(tick);
+    }
+
+    document.querySelector('.copy').addEventListener('click', async (event) => {
+      const value = event.currentTarget.dataset.ca;
+      try {
+        await navigator.clipboard.writeText(value);
+        event.currentTarget.textContent = 'OK';
+        setTimeout(() => event.currentTarget.textContent = 'CA', 900);
+      } catch {
+        event.currentTarget.textContent = 'CA';
+      }
+    });
+
+    resize();
+    tick();
+    addEventListener('resize', resize);
+  </script>
+</body>
+</html>

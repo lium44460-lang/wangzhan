@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400">
+  <defs>
+    <linearGradient id="core" x1="62" y1="58" x2="342" y2="345">
+      <stop offset="0" stop-color="#23d7ff"/>
+      <stop offset=".38" stop-color="#f4f7f5"/>
+      <stop offset="1" stop-color="#b8ff37"/>
+    </linearGradient>
+    <radialGradient id="bg" cx="68%" cy="24%" r="82%">
+      <stop offset="0" stop-color="#172323"/>
+      <stop offset="1" stop-color="#050607"/>
+    </radialGradient>
+    <filter id="glow" x="-35%" y="-35%" width="170%" height="170%">
+      <feGaussianBlur stdDeviation="10" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="0 0 0 0 .72 0 0 0 0 1 0 0 0 0 .22 0 0 0 .68 0"/>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="400" height="400" fill="#050607"/>
+  <rect x="22" y="22" width="356" height="356" rx="44" fill="url(#bg)" stroke="#273031" stroke-width="2"/>
+  <path d="M54 302 348 81" stroke="#23d7ff" stroke-width="1.4" opacity=".34"/>
+  <path d="M76 337 360 132" stroke="#b8ff37" stroke-width="1.2" opacity=".3"/>
+  <path d="M198 64 326 318h-72l-24-53H131l-24 53H36L163 64Z" fill="url(#core)" filter="url(#glow)"/>
+  <path d="M158 211h44l-23-55Z" fill="#050607" opacity=".88"/>
+  <path d="M248 132h72l-64 76 70 84h-75l-33-42-34 42h-74l70-84-63-76h72l29 39Z" fill="#050607" opacity=".82"/>
+  <path d="M254 132h72l-64 76 70 84h-75" fill="none" stroke="#f4f7f5" stroke-width="9" stroke-linecap="round" opacity=".72"/>
+  <text x="200" y="360" text-anchor="middle" fill="#f4f7f5" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="900">APX</text>
+</svg>
